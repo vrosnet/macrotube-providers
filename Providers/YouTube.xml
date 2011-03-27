@@ -1,119 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<VideoService
-	DefaultCategoryTransform="Feed"
-	DefaultCategoryUrl="http://gdata.youtube.com/feeds/api/videos?category={Category.ID}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude"
-    Description="Founded in February 2005, YouTube is the leader in online video, and the premier destination to watch and share original videos worldwide through a Web experience."
-    Image="http://services.jasmio.com/macrotube/providers/YouTube.png"
-	Name="YouTube"
-	SearchTransform="Feed"
-	SearchUrl="http://gdata.youtube.com/feeds/api/videos?q={SearchTerm}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude"
-	Type="XSLT"
-	UpdateUrl="http://services.jasmio.com/macrotube/providers/YouTube.xml"
-	Version="1.4"
-	>
-	<Categories>
-		<Category
-			ID="all"
-			Name="All"
-			Transform="Feed"
-			Url="http://gdata.youtube.com/feeds/api/videos?orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude"
-		/>
-		<Category
-			ID="Autos" 
-			Name="Autos + Vehicles"
-		/>
-		<Category
-			ID="Comedy" 
-			Name="Comedy"
-		/>
-		<Category
-			ID="Education" 
-			Name="Education"
-		/>
-		<Category
-			ID="Entertainment" 
-			Name="Entertainment"
-		/>
-		<Category
-			ID="Film,Animation" 
-			Name="Film + Animation"
-		/>
-		<Category
-			ID="Gaming" 
-			Name="Gaming"
-		/>
-		<Category
-			ID="Howto,Style" 
-			Name="Howto + Style"
-		/>
-		<Category
-			ID="Music" 
-			Name="Music"
-		/>
-		<Category
-			ID="News,Politics" 
-			Name="News + Politics"
-		/>
-		<Category
-			ID="Nonprofits,Activism" 
-			Name="Nonprofits + Activism"
-		/>
-		<Category
-			ID="People,Blogs" 
-			Name="People + Blogs"
-		/>
-		<Category
-			ID="Pets,Animals" 
-			Name="Pets + Animals"
-		/>
-		<Category
-			ID="Science,Technology" 
-			Name="Science + Technology"
-		/>
-		<Category
-			ID="Sports" 
-			Name="Sports"
-		/>
-		<Category
-			ID="Travel,Events" 
-			Name="Travel + Events"
-		/>
-	</Categories>
-	<SortOrders>
-		<SortOrder
-			ID="published"
-			Name="date"
-		/>
-		<SortOrder
-			ID="rating"
-			Name="rating"
-		/>
-		<SortOrder
-			ID="viewCount"
-			Name="views"
-		/>
-		<SortOrder
-			ID="relevance"
-			Name="relevance"
-		/>
-	</SortOrders>
-	<Transforms>
-		<Transform Name="Feed">
-			<xsl:stylesheet
-				version="1.0"
-				xmlns:atom="http://www.w3.org/2005/Atom"
-				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-				xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/"
-				xmlns:gml="http://www.opengis.net/gml"
-				xmlns:georss="http://www.georss.org/georss"
-				xmlns:media="http://search.yahoo.com/mrss/"
-				xmlns:yt="http://gdata.youtube.com/schemas/2007"
-				xmlns:gd="http://schemas.google.com/g/2005"
-				xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-				xmlns:func="urn:local-functions"
-				>
-				<msxsl:script language="C#" implements-prefix="func">
-				<![CDATA[
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- YouTube provider - Last updated 2011-03-27 -->
+
+<VideoService DefaultCategoryTransform="Feed" DefaultCategoryUrl="http://gdata.youtube.com/feeds/api/videos?category={Category.ID}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude" Description="Founded in February 2005, YouTube is the leader in online video, and the premier destination to watch and share original videos worldwide through a Web experience." Image="http://services.jasmio.com/macrotube/providers/YouTube.png" Name="YouTube" SearchTransform="Feed" SearchUrl="http://gdata.youtube.com/feeds/api/videos?q={SearchTerm}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude" Type="XSLT" UpdateUrl="http://services.jasmio.com/macrotube/providers/YouTube.xml" Version="1.5">
+  <Categories>
+    <Category ID="all" Name="All" Transform="Feed" Url="http://gdata.youtube.com/feeds/api/videos?orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}" />
+
+<!-- To enable Favorites, un-comment the following Category line and replace USERNAME with your YouTube username.
+     Thanks to jedipunk for figuring this out, as well as "most popular" link below -->
+<!--
+    <Category ID="Favorites" Name="Favorites" Transform="Feed" Url="http://gdata.youtube.com/feeds/api/users/USERNAME/favorites?v=2&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;fmt=18" />
+-->
+
+    <Category ID="Most-Popular" Name="Most-Popular" Transform="Feed" Url="http://gdata.youtube.com/feeds/api/standardfeeds/US/most_popular?v=2&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;fmt=18" />
+    <Category ID="Autos" Name="Autos + Vehicles" />
+    <Category ID="Comedy" Name="Comedy" />
+    <Category ID="Education" Name="Education" />
+    <Category ID="Entertainment" Name="Entertainment" />
+    <Category ID="Film,Animation" Name="Film + Animation" />
+    <Category ID="Gaming" Name="Gaming" />
+    <Category ID="Howto,Style" Name="Howto + Style" />
+    <Category ID="Music" Name="Music" />
+    <Category ID="News,Politics" Name="News + Politics" />
+    <Category ID="Nonprofits,Activism" Name="Nonprofits + Activism" />
+    <Category ID="People,Blogs" Name="People + Blogs" />
+    <Category ID="Pets,Animals" Name="Pets + Animals" />
+    <Category ID="Science,Technology" Name="Science + Technology" />
+    <Category ID="Sports" Name="Sports" />
+    <Category ID="Travel,Events" Name="Travel + Events" />
+  </Categories>
+  <SortOrders>
+    <SortOrder ID="published" Name="date" />
+    <SortOrder ID="rating" Name="rating" />
+    <SortOrder ID="viewCount" Name="views" />
+    <SortOrder ID="relevance" Name="relevance" />
+  </SortOrders>
+  <Transforms>
+    <Transform Name="Feed">
+      <xsl:stylesheet version="1.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" xmlns:gml="http://www.opengis.net/gml" xmlns:georss="http://www.georss.org/georss" xmlns:media="http://search.yahoo.com/mrss/" xmlns:yt="http://gdata.youtube.com/schemas/2007" xmlns:gd="http://schemas.google.com/g/2005" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:func="urn:local-functions">
+        <msxsl:script language="C#" implements-prefix="func"><![CDATA[
 				
 				Random random = new Random();
 				
@@ -125,69 +49,67 @@
 				{
 					return source.Replace("http://i.ytimg.com", "http://i" + (random.Next(4) + 1).ToString() + ".ytimg.com");
 				}
-				]]>
-				</msxsl:script>
-
-				<xsl:output indent="yes" method="xml" />
-				<xsl:template match="media:thumbnail">
-					<xsl:element name="thumbnail">
-						<xsl:attribute name="height">
-							<xsl:value-of select="@height"/>
-						</xsl:attribute>
-						<xsl:attribute name="time">
-							<xsl:value-of select="@time"/>
-						</xsl:attribute>
-						<xsl:attribute name="url">
-							<xsl:value-of select="func:fixthumbnail(@url)"/>
-						</xsl:attribute>
-						<xsl:attribute name="width">
-							<xsl:value-of select="@width"/>
-						</xsl:attribute>
-					</xsl:element>
-				</xsl:template>
-				<xsl:template match="media:player">
-					<xsl:element name="video">
-						<xsl:attribute name="type">application/x-shockwave-flash</xsl:attribute>
-						<xsl:attribute name="url"><xsl:value-of select="@url"/>&amp;fmt=18</xsl:attribute>
-					</xsl:element>
-				</xsl:template>
-				<xsl:template match="atom:entry">
-					<xsl:element name="item">
-						<xsl:attribute name="date">
-							<xsl:value-of select="atom:published"/>
-						</xsl:attribute>
-						<xsl:attribute name="duration">
-							<xsl:value-of select="media:group/yt:duration/@seconds"/>
-						</xsl:attribute>
-						<xsl:attribute name="rating">
-							<xsl:value-of select="(gd:rating/@average)*20"/>
-						</xsl:attribute>
-						<xsl:attribute name="title">
-							<xsl:value-of select="atom:title"/>
-						</xsl:attribute>
-						<xsl:element name="description">
-							<xsl:value-of select="atom:content"/>
-						</xsl:element>
-						<xsl:element name="thumbnails">
-							<xsl:apply-templates select="media:group/media:thumbnail"/>
-						</xsl:element>
-						<xsl:element name="videos">
-							<xsl:apply-templates select="media:group/media:player"/>
-							<xsl:apply-templates select="media:group/media:content"/>
-						</xsl:element>
-					</xsl:element>
-				</xsl:template>
-				<xsl:template match="/atom:feed">
-					<xsl:element name="items">
-						<xsl:apply-templates select="atom:entry"/>
-					</xsl:element>
-				</xsl:template>
-			</xsl:stylesheet>
-		</Transform>
-	</Transforms>
-	<VideoProviders>
-		<VideoProvider class="MacroTube.Model.YouTubeVideoProvider">
-			<![CDATA[
+				]]></msxsl:script>
+        <xsl:output indent="yes" method="xml" />
+        <xsl:template match="media:thumbnail">
+          <xsl:element name="thumbnail">
+            <xsl:attribute name="height">
+              <xsl:value-of select="@height" />
+            </xsl:attribute>
+            <xsl:attribute name="time">
+              <xsl:value-of select="@time" />
+            </xsl:attribute>
+            <xsl:attribute name="url">
+              <xsl:value-of select="func:fixthumbnail(@url)" />
+            </xsl:attribute>
+            <xsl:attribute name="width">
+              <xsl:value-of select="@width" />
+            </xsl:attribute>
+          </xsl:element>
+        </xsl:template>
+        <xsl:template match="media:player">
+          <xsl:element name="video">
+            <xsl:attribute name="type">application/x-shockwave-flash</xsl:attribute>
+            <xsl:attribute name="url">
+              <xsl:value-of select="@url" />&amp;fmt=18</xsl:attribute>
+          </xsl:element>
+        </xsl:template>
+        <xsl:template match="atom:entry">
+          <xsl:element name="item">
+            <xsl:attribute name="date">
+              <xsl:value-of select="atom:published" />
+            </xsl:attribute>
+            <xsl:attribute name="duration">
+              <xsl:value-of select="media:group/yt:duration/@seconds" />
+            </xsl:attribute>
+            <xsl:attribute name="rating">
+              <xsl:value-of select="(gd:rating/@average)*20" />
+            </xsl:attribute>
+            <xsl:attribute name="title">
+              <xsl:value-of select="atom:title" />
+            </xsl:attribute>
+            <xsl:element name="description">
+              <xsl:value-of select="atom:content" />
+            </xsl:element>
+            <xsl:element name="thumbnails">
+              <xsl:apply-templates select="media:group/media:thumbnail" />
+            </xsl:element>
+            <xsl:element name="videos">
+              <xsl:apply-templates select="media:group/media:player" />
+              <xsl:apply-templates select="media:group/media:content" />
+            </xsl:element>
+          </xsl:element>
+        </xsl:template>
+        <xsl:template match="/atom:feed">
+          <xsl:element name="items">
+            <xsl:apply-templates select="atom:entry" />
+          </xsl:element>
+        </xsl:template>
+      </xsl:stylesheet>
+    </Transform>
+  </Transforms>
+  <VideoProviders>
+    <VideoProvider class="MacroTube.Model.YouTubeVideoProvider"><![CDATA[
 
 using System;
 using System.Diagnostics;
@@ -252,7 +174,7 @@ namespace MacroTube.Model
 					
 					foreach (string fmt_url_esc in fmt_url_match.Split(','))
 					{
-						string fmt_url = Uri.UnescapeDataString( fmt_url_esc ).Replace( "\\/", "/" );
+						string fmt_url = Regex.Unescape( Uri.UnescapeDataString( fmt_url_esc ) );
 
 						Debug.WriteLine(string.Format("fmt_url={0}", fmt_url));
 						
@@ -291,5 +213,5 @@ namespace MacroTube.Model
 }
 
 		]]></VideoProvider>
-	</VideoProviders>
+  </VideoProviders>
 </VideoService>
