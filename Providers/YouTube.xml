@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- YouTube provider - Last updated 2011-03-27 -->
-
+<!-- YouTube provider - Last updated 2011-08-27 by basik -->
+<!-- This file maintained http://code.google.com/p/macrotube-providers/
+	 Raise or report issues at the above
+ -->
 <VideoService DefaultCategoryTransform="Feed" DefaultCategoryUrl="http://gdata.youtube.com/feeds/api/videos?category={Category.ID}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude" Description="Founded in February 2005, YouTube is the leader in online video, and the premier destination to watch and share original videos worldwide through a Web experience." Image="http://services.jasmio.com/macrotube/providers/YouTube.png" Name="YouTube" SearchTransform="Feed" SearchUrl="http://gdata.youtube.com/feeds/api/videos?q={SearchTerm}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}&amp;racy=exclude" Type="XSLT" UpdateUrl="http://services.jasmio.com/macrotube/providers/YouTube.xml" Version="1.5">
   <Categories>
     <Category ID="all" Name="All" Transform="Feed" Url="http://gdata.youtube.com/feeds/api/videos?orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}" />
@@ -108,14 +110,16 @@
       </xsl:stylesheet>
     </Transform>
   </Transforms>
-  <VideoProviders>
-    <VideoProvider class="MacroTube.Model.YouTubeVideoProvider"><![CDATA[
+	<VideoProviders>
+		<VideoProvider class="MacroTube.Model.YouTubeVideoProvider">
+			<![CDATA[
 
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace MacroTube.Model
 {
@@ -128,6 +132,11 @@ namespace MacroTube.Model
 		private static readonly Regex _swfvarsMatch20110306 = new Regex(@"^.*<object\s.*?<param name=""flashvars""\s+value="".*&amp;fmt_url_map=([^&\\]+).*$", RegexOptions.Compiled | RegexOptions.Singleline);
 		private static readonly Regex _swfconfigMatch20110306 = new Regex(@"^.*var swfConfig\s+=.*, ""fmt_url_map"": ""([^""]*)"".*$", RegexOptions.Compiled | RegexOptions.Singleline);
 
+		//Fixes as @27 August 2011
+		private static readonly Regex _swfvarsMatch = new Regex(@"^*flashvars=.*&amp;s.*?"" ", RegexOptions.Compiled | RegexOptions.Multiline);
+		private static readonly Regex _swfvarsUrlStreamMatch = new Regex(@"^*url_encoded_fmt_stream_map=.*?&itag=5&amp;", RegexOptions.Compiled | RegexOptions.Multiline);
+		private static readonly Regex _swfvarsTitleMatch = new Regex(@"^*<meta property=""og:title"" content="".*"">", RegexOptions.Compiled | RegexOptions.Multiline);
+		
 		public YouTubeVideoProvider()
 			: base()
 		{
@@ -144,8 +153,14 @@ namespace MacroTube.Model
 			try
 			{
 				string html = new WebClient().DownloadString(sourceURL);
+
 				
-				if (_swfvarsMatch20110306.IsMatch(html))
+				if (_swfvarsMatch.IsMatch(html))
+				{
+					Debug.WriteLine(string.Format("Fix Match as @27 Aug 2011"));
+					resolvedURL = ResolveVideoURL(html);
+				}
+				else if (_swfvarsMatch20110306.IsMatch(html))
 				{
 					Debug.WriteLine( "swfvars regex matched" );
 
@@ -174,7 +189,7 @@ namespace MacroTube.Model
 					
 					foreach (string fmt_url_esc in fmt_url_match.Split(','))
 					{
-						string fmt_url = Regex.Unescape( Uri.UnescapeDataString( fmt_url_esc ) );
+						string fmt_url = Uri.UnescapeDataString( fmt_url_esc ).Replace( "\\/", "/" );
 
 						Debug.WriteLine(string.Format("fmt_url={0}", fmt_url));
 						
@@ -199,7 +214,7 @@ namespace MacroTube.Model
 			}
 			catch (Exception ex)
 			{
-                Debug.WriteLine(string.Format("Error getting download URL: {0}\r\n{1}\r\n{2}", sourceURL, ex));
+				Debug.WriteLine(string.Format("Error getting download URL: {0}\r\n{1}\r\n{2}", sourceURL, ex));
 			}
 
 			return Uri.IsWellFormedUriString(resolvedURL, UriKind.Absolute) ? resolvedURL : null;
@@ -209,9 +224,49 @@ namespace MacroTube.Model
 		{
 			return _watchMatch.IsMatch(url);
 		}
+		
+		private string ResolveVideoURL(string html)
+		{
+			string outputURL = string.Empty;
+			List<string> url = new List<string>();
+			string flashvars = _swfvarsMatch.Match(html).Groups[0].Value;
+			string title = Guid.NewGuid().ToString();
+			
+			//Get the html into a readable format 		
+			for(int i=1;i<=5;i++)
+				flashvars = Regex.Unescape(Uri.UnescapeDataString(flashvars));
+		
+			//Locate video URLs text section
+			string urlstream = _swfvarsUrlStreamMatch.Match(flashvars).Groups[0].Value;
+			string[] urls = urlstream.Split(new string[]{"url="},StringSplitOptions.RemoveEmptyEntries);
+			
+			//Extract video urls - WEBM, FLV and MP4
+			foreach (string fmt_url_esc in urls)
+			{
+				string fmt_url = Regex.Unescape( Uri.UnescapeDataString( fmt_url_esc.Substring(0,fmt_url_esc.Length-1)) );
+
+				if(fmt_url.ToLower().StartsWith(@"http://"))
+					url.Add(fmt_url);
+			}
+			
+			//Extract the MP4 url and append a title
+			Regex urlMatch = new Regex("^*http://.*&fallback.*?",RegexOptions.Compiled | RegexOptions.Singleline);
+			foreach(string u in url)
+			{
+				//Locate MP4 url
+				if(u.ToString().ToLower().Contains(@"video/mp4"))
+				{
+					outputURL = string.Format("{0}&title={1}",urlMatch.Match(u).Groups[0].Value,Uri.EscapeUriString(title)).ToString();
+					break;
+				}
+			}
+			
+			//Url of MP4 video
+			return outputURL;
+		}
 	}
 }
 
 		]]></VideoProvider>
-  </VideoProviders>
+	</VideoProviders>
 </VideoService>
