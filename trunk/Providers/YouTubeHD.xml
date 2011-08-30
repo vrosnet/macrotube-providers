@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VideoService
+	Name="MyYouTube HD"
+	DefaultCategoryTransform="Feed"
+	DefaultCategoryUrl="http://gdata.youtube.com/feeds/api/videos?v=2&amp;category={Category.ID}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}"
+	Description="Founded in February 2005, YouTube is the leader in online video, and the premier destination to watch and share original videos worldwide through a Web experience."
+	FavoritesUrl="http://gdata.youtube.com/feeds/api/users/{Username}/favorites?v=2&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}"
+	Image="http://services.jasmio.com/macrotube/providers/YouTubeHD.png"
+	RelatedUrl="http://gdata.youtube.com/feeds/api/videos/{Video.ID}/related?v=2&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}"
+	SearchTransform="Feed"
+	SearchUrl="http://gdata.youtube.com/feeds/api/videos?v=2&amp;q={SearchTerm}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}"
+	Type="XSLT"
+	UpdateUrl="http://services.jasmio.com/macrotube/providers/YouTubeHD.xml"
+	UserUrl="http://gdata.youtube.com/feeds/api/videos?v=2&amp;author={Username}&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}"
+	Version="1.6"
+	>
+	<ContentFilter None="none" Moderate="moderate" Safe="strict" />
+	<Localization>
+		<Locale ISO2="DE" Name="MyYouTube HD" Description="Gegründet im Februar 2005, ist YouTube der Marktführer im Bereich Online Video und das erste Ziel zu sehen und teilen Sie Original-Videos weltweit über einen Web-Erfahrung."/>
+		<Locale ISO2="FR" Name="MyYouTube HD" Description="Fondée en Février 2005, YouTube est le leader de la vidéo en ligne, et la première destination pour regarder et partager des vidéos originales dans le monde entier à travers une expérience Web."/>
+		<Locale ISO2="IT" Name="MyYouTube HD" Description="Fondata nel febbraio 2005, YouTube è il leader dei video online, e la destinazione migliore per guardare e condividere video originali in tutto il mondo attraverso un'esperienza Web."/>
+	</Localization>
+	<Categories>
+		<Category
+			ID="all"
+			Name="All"
+			Transform="Feed"
+			Url="http://gdata.youtube.com/feeds/api/videos?v=2&amp;orderby={SortOrder}&amp;start-index={Offset}&amp;max-results={Count}"
+		/>
+		<Category
+			ID="Autos"
+			Name="Autos + Vehicles"
+			>
+			<Localization>
+				<Locale ISO2="DE" Name="Autos + Fahrzeuge"/>
+				<Locale ISO2="FR" Name="Autos + Véhicules"/>
+				<Locale ISO2="IT" Name="Auto + Veicoli"/>
+			</Localization>
+		</Category>
+		<Category
+			ID="Comedy"
+			Name="Comedy"
+		/>
+		<Category
+			ID="Education"
+			Name="Education"
+		/>
+		<Category
+			ID="Entertainment"
+			Name="Entertainment"
+		/>
+		<Category
+			ID="Film,Animation"
+			Name="Film + Animation"
+		/>
+		<Category
+			ID="Gaming"
+			Name="Gaming"
+		/>
+		<Category
+			ID="Howto,Style"
+			Name="Howto + Style"
+		/>
+		<Category
+			ID="Music"
+			Name="Music"
+		/>
+		<Category
+			ID="News,Politics"
+			Name="News + Politics"
+		/>
+		<Category
+			ID="Nonprofits,Activism"
+			Name="Nonprofits + Activism"
+		/>
+		<Category
+			ID="People,Blogs"
+			Name="People + Blogs"
+		/>
+		<Category
+			ID="Pets,Animals"
+			Name="Pets + Animals"
+		/>
+		<Category
+			ID="Science,Technology"
+			Name="Science + Technology"
+		/>
+		<Category
+			ID="Sports"
+			Name="Sports"
+		/>
+		<Category
+			ID="Travel,Events"
+			Name="Travel + Events"
+		/>
+	</Categories>
+	<SortOrders>
+		<SortOrder
+			ID="published"
+			Name="date"
+			IsDefaultSortOrder="true"
+			>
+			<Localization>
+				<Locale ISO2="DE" Name="datum"/>
+				<Locale ISO2="FR" Name="date"/>
+				<Locale ISO2="IT" Name="data"/>
+			</Localization>
+		</SortOrder>
+		<SortOrder
+			ID="rating"
+			Name="rating"
+		/>
+		<SortOrder
+			ID="viewCount"
+			Name="views"
+		/>
+		<SortOrder
+			ID="relevance"
+			Name="relevance"
+			IsSearchSortOrder="true"
+		/>
+	</SortOrders>
+	<Transforms>
+		<Transform Name="Feed">
+			<xsl:stylesheet
+				version="1.0"
+				xmlns:atom="http://www.w3.org/2005/Atom"
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+				xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/"
+				xmlns:gml="http://www.opengis.net/gml"
+				xmlns:georss="http://www.georss.org/georss"
+				xmlns:media="http://search.yahoo.com/mrss/"
+				xmlns:yt="http://gdata.youtube.com/schemas/2007"
+				xmlns:gd="http://schemas.google.com/g/2005"
+				xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+				xmlns:func="urn:local-functions"
+				>
+				<msxsl:script language="C#" implements-prefix="func">
+				<![CDATA[
+
+				Random random = new Random();
+
+				public string escapeuridata(string unescaped)
+				{
+					return Uri.EscapeDataString(unescaped);
+				}
+
+				public string fixthumbnail(string source)
+				{
+					return source.Replace("http://i.ytimg.com", "http://i" + (random.Next(4) + 1).ToString() + ".ytimg.com");
+				}
+
+				]]>
+				</msxsl:script>
+
+				<xsl:output indent="yes" method="xml" />
+				<xsl:template match="media:thumbnail">
+					<xsl:element name="thumbnail">
+						<xsl:attribute name="height">
+							<xsl:value-of select="@height"/>
+						</xsl:attribute>
+						<xsl:attribute name="time">
+							<xsl:value-of select="@time"/>
+						</xsl:attribute>
+						<xsl:attribute name="url">
+							<xsl:value-of select="func:fixthumbnail(@url)"/>
+						</xsl:attribute>
+						<xsl:attribute name="width">
+							<xsl:value-of select="@width"/>
+						</xsl:attribute>
+					</xsl:element>
+				</xsl:template>
+				<xsl:template match="media:player">
+					<xsl:element name="video">
+						<xsl:attribute name="type">application/x-shockwave-flash</xsl:attribute>
+						<xsl:attribute name="url">hd:<xsl:value-of select="@url"/></xsl:attribute>
+					</xsl:element>
+				</xsl:template>
+				<xsl:template match="atom:entry">
+					<xsl:element name="item">
+						<xsl:attribute name="date">
+							<xsl:value-of select="atom:published"/>
+						</xsl:attribute>
+						<xsl:attribute name="duration">
+							<xsl:value-of select="media:group/yt:duration/@seconds"/>
+						</xsl:attribute>
+						<xsl:attribute name="rating">
+							<xsl:choose>
+								<xsl:when test="gd:rating/@average">
+									<xsl:value-of select="(gd:rating/@average)*20"/>
+								</xsl:when>
+								<xsl:otherwise>-1.0</xsl:otherwise>
+							</xsl:choose>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:value-of select="atom:title"/>
+						</xsl:attribute>
+						<xsl:element name="description">
+							<xsl:value-of select="media:group/media:description"/>
+						</xsl:element>
+						<xsl:element name="thumbnails">
+							<xsl:apply-templates select="media:group/media:thumbnail"/>
+						</xsl:element>
+						<xsl:element name="videos">
+							<xsl:apply-templates select="media:group/media:player"/>
+							<xsl:apply-templates select="media:group/media:content"/>
+						</xsl:element>
+					</xsl:element>
+				</xsl:template>
+				<xsl:template match="/atom:feed">
+					<xsl:element name="items">
+						<xsl:apply-templates select="atom:entry"/>
+					</xsl:element>
+				</xsl:template>
+			</xsl:stylesheet>
+		</Transform>
+	</Transforms>
+	<VideoProviders>
+		<VideoProvider class="MacroTube.Model.YouTubeHDVideoProvider">
+			<![CDATA[
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
+
+namespace MacroTube.Model
+{
+	public class YouTubeHDVideoProvider : VideoProvider
+	{
+		private static readonly Regex _watchMatch = new Regex(@"^hd:http://www.youtube.com/watch\?(?:|.*&)v=([A-Za-z0-9_\-]+)(?:$|&.*$)", RegexOptions.Compiled);
+		private static readonly Regex _idMatch = new Regex(@".*[\?v|\&]=([^\s\&]*).*", RegexOptions.Compiled | RegexOptions.Singleline);
+		private static readonly Regex _signatureMatch = new Regex(@"^(?:.*'SWF_ARGS'\s*:.*\{[^\}]*""t""\s*:\s*"")([^""]+)(?:"".*)$", RegexOptions.Compiled | RegexOptions.Singleline);
+
+		private static readonly Regex _swfvarsMatch20100401 = new Regex(@"^.*""<object\s.*?<param name=\\""flashvars\\""\s+value=\\"".*?fmt_url_map=([^&\\]+).*?\\"">.*$", RegexOptions.Compiled | RegexOptions.Singleline);
+
+		private static readonly Regex _fmRegex1 = new Regex(@"\&fallback_host=.*$", RegexOptions.Compiled);
+		private static readonly Regex _fmRegex2 = new Regex(@"\&itag=(\d*)", RegexOptions.Compiled);
+
+		public YouTubeHDVideoProvider()
+			: base()
+		{
+		}
+
+		public override string GetDownloadUrl(string sourceURL)
+		{
+			if (!IsProvider(sourceURL)) return null;
+
+			string resolvedURL = null;
+			Dictionary<string, string> formatMap = new Dictionary<string, string>();
+			List<string> formatPriority = new List<string>(new string[] { "38", "37", "22", "18" } );
+			string infoUrl = string.Format("http://www.youtube.com/get_video_info?&video_id={0}", _idMatch.Replace(sourceURL, "$1"));
+			string infoData = new WebClient().DownloadString(infoUrl);
+
+			Debug.WriteLine(string.Format("--- SOURCE URL: {0} ---", sourceURL));
+			Debug.WriteLine(string.Format("infoData: {0}", infoData));
+
+			string[] infoParameters = infoData.Split('&');
+
+			foreach (string infoParameter in infoParameters)
+			{
+				// Debug.WriteLine(string.Format("infoParameter: {0}", infoParameter));
+
+				if (infoParameter.StartsWith("url_encoded_fmt_stream_map="))
+				{
+					string formatStreamMap = Uri.UnescapeDataString(infoParameter.Substring(infoParameter.IndexOf("=") + 1));
+
+					Debug.WriteLine(string.Format("formatStreamMap: {0}", formatStreamMap));
+
+					foreach (string formatStream in formatStreamMap.Split(','))
+					{
+						Debug.WriteLine(string.Format("formatStream: {0}", formatStream));
+
+						string fm_mdf = Uri.UnescapeDataString(formatStream);
+						Debug.WriteLine(string.Format("============ PROCESSING : {0}", fm_mdf));
+						string[] format = new string[] {"",""};
+						if (fm_mdf.StartsWith("url="))
+						{
+							fm_mdf = fm_mdf.Substring(fm_mdf.IndexOf("=") + 1);
+							Debug.WriteLine(string.Format("============ PROCESSING2 : {0}", fm_mdf));
+							Match m = _fmRegex2.Match(fm_mdf);
+//							Debug.WriteLine(string.Format("============ m.Groups1 : {0}", m.Groups[1]));
+							format[0] = string.Format("{0}", m.Groups[1]);
+							format[1] = _fmRegex1.Replace(fm_mdf,"");
+							Debug.WriteLine(string.Format("============ format : {0} => {1}", format[0],format[1]));
+
+						}
+
+//						string[] format = formatStream.Split('|');
+
+						if (formatPriority.Contains(format[0]))
+						{
+							Debug.WriteLine(string.Format("--- ADDING FORMAT: {0} => {1} ---", format[0], format[1]));
+
+							formatMap[format[0]] = format[1];
+						}
+						else
+						{
+							Debug.WriteLine(string.Format("--- REJECTING FORMAT: {0} ---", format[0]));
+						}
+					}
+				}
+			}
+
+			foreach (string format in formatPriority)
+			{
+				if (formatMap.TryGetValue(format, out resolvedURL))
+				{
+					Debug.WriteLine(string.Format("--- SELECTED FORMAT: {0} ---", format));
+					break;
+				}
+			}
+
+			if (resolvedURL == null)
+			{
+				try
+				{
+					Debug.WriteLine(string.Format("--- ATTEMPTING FORMAT SCRAPE: {0} ---", sourceURL.Substring(3)));
+
+					string html = new WebClient().DownloadString(sourceURL.Substring(3) + "&fmt=18&hd=1");
+
+					if (_swfvarsMatch20100401.IsMatch(html))
+					{
+						string formatStreamMap = Uri.UnescapeDataString(_swfvarsMatch20100401.Replace(html, "$1"));
+
+						//Debug.WriteLine(string.Format("formatStreamMap: {0}", formatStreamMap));
+
+						foreach (string formatStream in formatStreamMap.Split(','))
+						{
+							//Debug.WriteLine(string.Format("formatStream: {0}", formatStream));
+
+							string[] format = formatStream.Split('|');
+
+							if (formatPriority.Contains(format[0]))
+							{
+								Debug.WriteLine(string.Format("--- ADDING FORMAT: {0} => {1} ---", format[0], format[1]));
+
+								formatMap[format[0]] = format[1];
+							}
+							else
+							{
+								Debug.WriteLine(string.Format("--- REJECTING FORMAT: {0} ---", format[0]));
+							}
+						}
+					}
+
+					if (_signatureMatch.IsMatch(html) && (!formatMap.ContainsKey("18")))
+					{
+						Debug.WriteLine("--- ADDING FALLBACK URL ---");
+						formatMap.Add("18", string.Format("http://www.youtube.com/get_video?video_id={0}&t={1}&fmt=18", _idMatch.Replace(sourceURL, "$1"), _signatureMatch.Replace(html, "$1")));
+					}
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine(string.Format("Error getting download URL: {0}\r\n{1}\r\n{2}", sourceURL, ex));
+				}
+
+				foreach (string format in formatPriority)
+				{
+					if (formatMap.TryGetValue(format, out resolvedURL))
+					{
+						Debug.WriteLine(string.Format("--- SELECTED FORMAT: {0} ---", format));
+						break;
+					}
+				}
+			}
+
+			Debug.WriteLine(string.Format("--- RESOLVED URL: {0} ---", resolvedURL));
+
+			return Uri.IsWellFormedUriString(resolvedURL, UriKind.Absolute) ? resolvedURL : null;
+		}
+
+		public override bool IsProvider(string url)
+		{
+			return _watchMatch.IsMatch(url);
+		}
+	}
+}
+
+		]]></VideoProvider>
+	</VideoProviders>
+</VideoService>
