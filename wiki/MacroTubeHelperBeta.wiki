@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Beta testers to email macrotube@iventris.net with subject MacroTube Helper Trial. 
+Beta testers to join this [http://groups.google.com/group/macrotube-providers-discuss] group. 
 
 At least 10 users required, especially those who use the youtube and youtubehd providers a lot, the more the better.
 
@@ -22,4 +22,3 @@ The app will aim to incorporate all the existing MacroTube providers. There will
 Existing providers and xml files will remain available and anyone can upload an xml file for any provider here. You do not have to pay for a license to use the community provided xml files.
 
 Comments and thoughts welcomed.
-
