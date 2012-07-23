@@ -1,0 +1,14 @@
+#summary MacroTube Helper Beta testing
+
+= Introduction =
+
+Beta testers to email macrotube@iventris.net with subject MacroTube Helper Trial. 
+
+At least 10 users required, especially those who use the youtube and youtubehd providers a lot, the more the better.
+
+
+= Details =
+
+The basic idea is to provide a source xml file which uses a helper app to get the video URL. The Helper App will pass the video url to a web service which will do the necessary parsing and return the video url.
+
+No having to download and update provider xml files - a pain if your WMC is under your TV without a mouse or keyboard. It will start off with youtube and youtubehd support.
