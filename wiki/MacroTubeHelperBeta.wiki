@@ -11,4 +11,17 @@ At least 10 users required, especially those who use the youtube and youtubehd p
 
 The basic idea is to provide a source xml file which uses a helper app to get the video URL. The Helper App will pass the video url to a web service which will do the necessary parsing and return the video url.
 
-No having to download and update provider xml files - a pain if your WMC is under your TV without a mouse or keyboard. It will start off with youtube and youtubehd support.
+No having to download and update provider xml files - a pain if your WMC is under your TV without a mouse or keyboard. It will start off with youtube and youtubehd support. 
+
+The trial will run for 30 days, after which a license key will be needed.
+
+= Roadmap =
+
+The app will aim to incorporate all the existing MacroTube providers. There will be a one off license cost of $15. No additional cost if you have multiple WMC machines. Think of it as a Windows Media Center Appstore app. 
+
+Existing providers and xml files will remain available and anyone can upload an xml file for any provider here.
+
+Comments and thoughts welcomed.
+
+
+
