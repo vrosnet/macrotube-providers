@@ -7,7 +7,7 @@ Here is a quick guide to get you going. Close Windows Media Center and all progr
 
 = Details =
 
-The MacroTube Provider Helper is intended to replace the numerous xml configuration files for each video provider in MacroTube, with a version that uses the helper application instead. The Beta will only provide YouTube/YouTube HD support, so any of the providers still working with the current xml files will be unaffected.
+The MacroTube Provider Helper is intended to replace the numerous xml configuration files for each video provider in MacroTube, with a version that uses the helper application instead. The Beta will only provide {{{YouTube/YouTube}}} HD support, so any of the providers still working with the current xml files will be unaffected.
 
 =YouTube vs YouTubeHD=
 
@@ -19,7 +19,7 @@ Some videos will still display the old *"Video cannot be display for technical r
 
 By default MacroTube installs the configuration files here:
 
-* C:\ProgramData\Jasmio\MacroTube\Providers*
+*{{{C:\ProgramData\Jasmio\MacroTube\Providers}}}*
 
 There is an xml file and image per provider.
 
@@ -34,11 +34,11 @@ An installer is provided for 32-bit and 64-bit machines. Make sure to install th
 
  # Download the appropriate the installer from the [http://code.google.com/p/macrotube-providers/downloads/list Downloads] area of this project.
  # If you chose not to automatically replace the xml config files, you need to manually copy the youtube.xml file as follows:
- ## Open the helper folder *C:\Program Files\iVentris\MacroTube Helper* 
- ## Copy the *YouTube.xml* and *YouTube.xml* files to the *C:\ProgramData\Jasmio\MacroTube\Providers* folder.
+ ## Open the helper folder *{{{C:\Program Files\iVentris\MacroTube Helper}}}* 
+ ## Copy the *{{{YouTube.xml}}}* and *{{{YouTube.png}}}* files to the *{{{C:\ProgramData\Jasmio\MacroTube\Providers}}}* folder.
 
 =No thanks, not for me=
 
 If you decide that the helper app is not for you, you can simply  uninstall it.
 
-The app will uninstall itself completely, but the archived xml files in the MacroTube installation folder will need to be copied back manually. There is a date stamped folder C:\ProgramData\Jasmio\MacroTube\Providers\Archive_yyyyMMdd which will contain the replaced files. Just copy them to the Providers folder.
+The app will uninstall itself completely, but the archived xml files in the MacroTube installation folder will need to be copied back manually. There is a date stamped folder *{{{C:\ProgramData\Jasmio\MacroTube\Providers\Archive_yyyyMMdd}}}* which will contain the replaced files. Just copy them to the Providers folder.
