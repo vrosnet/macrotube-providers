@@ -9,7 +9,7 @@ Here is a quick guide to get you going. Close Windows Media Center and all progr
 
 The MacroTube Provider Helper is intended to replace the numerous xml configuration files for each video provider in MacroTube, with a version that uses the helper application instead. The Beta will only provide {{{YouTube/YouTube}}} HD support, so any of the providers still working with the current xml files will be unaffected.
 
-=YouTube vs YouTubeHD=
+={{{YouTube vs YouTubeHD}}}=
 
 You no longer need to have both as the Helper has merged these two functionally. So at first an attempt is made to get the HD version of the video - if available. The fall back is then to attempt to locate the MP4 format.
 
