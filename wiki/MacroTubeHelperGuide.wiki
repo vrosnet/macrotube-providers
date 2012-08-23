@@ -3,7 +3,8 @@
 
 = Introduction =
 
-Here is a quick guide to get you going. Close Windows Media Center and all programs before running the installation package.
+Here is a quick guide to get you going. Close Windows Media Center and all programs before running the installation package. To see user questions or ask a question please use the FAQ [https://groups.google.com/d/topic/macrotube-providers-discuss/5rfQVQGnmmM/discussion here]
+
 
 = Details =
 
@@ -22,11 +23,6 @@ By default MacroTube installs the configuration files here:
 *{{{C:\ProgramData\Jasmio\MacroTube\Providers}}}*
 
 There is an xml file and image per provider.
-
-
-=FAQ=
-
-[https://groups.google.com/d/topic/macrotube-providers-discuss/5rfQVQGnmmM/discussion FAQ]
 
 Note this folder is hidden by default on Windows 7 and you may have to enter the path in the Start menu Run window to find it.
 
