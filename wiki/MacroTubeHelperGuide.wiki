@@ -19,6 +19,7 @@ Some videos will still display the old *"Video cannot be display for technical r
 ={{{MacroTube Configuration}}}=
 
 By default MacroTube installs the configuration files here:
+[file:///C:/ProgramData/Jasmio/MacroTube/Providers test]
 
 *{{{C:\ProgramData\Jasmio\MacroTube\Providers}}}*
 
