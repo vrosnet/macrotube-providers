@@ -43,3 +43,5 @@ An installer is provided for 32-bit and 64-bit machines. Make sure to install th
 If you decide that the helper app is not for you, you can simply  uninstall it.
 
 The app will uninstall itself completely, but the archived xml files in the MacroTube installation folder will need to be copied back manually. There is a date stamped folder *{{{C:\ProgramData\Jasmio\MacroTube\Providers\Archive_yyyyMMdd}}}* which will contain the replaced files. Just copy them to the Providers folder.
+
+The archive folder is created only where you choose to automatically archive and copy existing provider files during the MacroTube Helper installation.
