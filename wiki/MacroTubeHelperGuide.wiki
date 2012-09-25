@@ -26,18 +26,6 @@ There is an xml file and image per provider.
 
 Note this folder is hidden by default on Windows 7 and you may have to enter the path in the Start menu Run window to find it.
 
-=Which Installer=
-
-An installer is provided for 32-bit and 64-bit machines. Make sure to install the correct one. If you install the wrong one it will not work. In this case, use Add or Remove Programs to uninstall the incorrect version and install the correct one.
-
-
-={{{MacroTube Helper Configuration}}}=
-
- # Download the appropriate the installer from the [http://code.google.com/p/macrotube-providers/downloads/list Downloads] area of this project.
- # If you chose not to automatically replace the xml config files, you need to manually copy the youtube.xml file as follows:
- ## Open the helper folder *{{{C:\Program Files\iVentris\MacroTube Helper}}}* 
- ## Copy the *{{{YouTube.xml}}}* and *{{{YouTube.png}}}* files to the *{{{C:\ProgramData\Jasmio\MacroTube\Providers}}}* folder.
-
 =No thanks, not for me=
 
 If you decide that the helper app is not for you, you can simply  uninstall it.
