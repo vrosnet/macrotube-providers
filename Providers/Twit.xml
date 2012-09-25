@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VideoService
+	Author="Boondoklife"
+	DefaultCategoryTransform="Feed"
+	DefaultCategoryUrl="http://feeds.twit.tv/{Category.ID}_video_{SortOrder}"
+	Description="Leo Laporte and friends present the TWiT network. Netcasts you love, from people you trust."
+	Image="http://mainwall1.us.to/macrotube/providers/Twit.png"
+	IsMultipage="False"
+	Name="TWIT.tv"
+	Type="XSLT"
+	UpdateUrl="http://mainwall1.us.to/macrotube/providers/Twit.xml"
+	Version="2.1"
+	>
+	<Categories>
+		<Category
+			ID="aaa"
+			Name="All About Android"
+		/>
+		<Category
+			ID="byb"
+			Name="Before You Buy"
+		/>
+		<Category
+			ID="floss"
+			Name="floss Weekly"
+		/>
+		<Category
+			ID="fr"
+			Name="Frame Rate"
+		/>
+		<Category
+			ID="hn"
+			Name="Ham Nation"
+		/>
+		<Category
+			ID="htg"
+			Name="Home Theater Geek"
+		/>
+		<Category
+			ID="ifive"
+			Name="iFive for the iPhone"
+		/>
+		<Category
+			ID="ipad"
+			Name="iPad Today"
+		/>
+		<Category
+			ID="kh"
+			Name="Know How..."
+		/>
+		<Category
+			ID="mbw"
+			Name="MacBreak Weekly"
+		/>
+		<Category
+			ID="nsfw"
+			Name="NSFW"
+		/>
+		<Category
+			ID="sn"
+			Name="Security Now"
+		/>
+		<Category
+			ID="tnt"
+			Name="Tech News Today"
+		/>
+		<Category
+			ID="dgw"
+			Name="The Giz Wiz"
+		/>
+		<Category
+			ID="natn"
+			Name="The Social Hour"
+		/>
+		<Category
+			ID="ttg"
+			Name="The Tech Guy"
+		/>
+		<Category
+			ID="twich"
+			Name="This Week in Computer Hardware"
+		/>
+		<Category
+			ID="twiet"
+			Name="This Week in Enterprise Tech"
+		/>
+		<Category
+			ID="twig"
+			Name="This Week in Google"
+		/>
+		<Category
+			ID="twil"
+			Name="This Week in Law"
+		/>
+		<Category
+			ID="twit"
+			Name="This Week in Tech"
+		/>
+		<Category
+			ID="tri"
+			Name="Triangulation"
+		/>
+		<Category
+			ID="specials"
+			Name="TwiT Live Specials"
+		/>
+		<Category
+			ID="ww"
+			Name="Windows Weekly"
+		/>
+	</Categories>
+	<SortOrders>
+		<SortOrder
+			ID="hd"
+			Name="HD"
+		/>
+		<SortOrder
+			ID="large"
+			Name="Large"
+		/>
+		<SortOrder
+			ID="small"
+			Name="small"
+		/>
+	</SortOrders>
+	<Transforms>
+		<Transform Name="Feed">
+			<xsl:stylesheet
+			 version="1.0"
+			 xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+			 xmlns:media="http://search.yahoo.com/mrss"
+			 xmlns:dm="http://www.dailymotion.com/dmrss"
+			 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+			 xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+			 xmlns:func="urn:local-functions"
+			 xmlns:mediafly="http://mediafly.com/xsd/RSS/1.0"
+			 xmlns:atom="http://www.w3.org/2005/Atom">
+				<msxsl:script language="C#" implements-prefix="func">
+				<![CDATA[
+					public string ReplaceVideoUrl(string VideoUrl)
+					{
+						return VideoUrl.Replace("h264b_640x368_500", "h264b_864x480_2000") ;
+					}
+
+					public string TruncateSummary(string summary)
+					{
+						return summary.Substring(0, 80)+"...";
+					}
+
+					public string CleanTitle(string title)
+					{
+						return System.Text.RegularExpressions.Regex.Replace(title, @"^[^:]+:\s+(.*)$", "$1");
+					}
+
+					public string GetThumbnail(string thumb)
+					{
+						string thumbPrefix = "http://feeds.twit.tv/podcasts/coverart/";
+						string thumbSuffix = "600video.jpg";
+						string thumbDefault = "http://www.cmikeb.com/wp-content/uploads/2010/10/twit-logo-150x150.jpg";
+
+						if (thumb.Contains ("aaa") == true)
+						{
+							return thumbPrefix+"aaa"+thumbSuffix;
+						}
+						else if (thumb.Contains ("byb") == true)
+						{
+							return thumbPrefix+"byb"+thumbSuffix;
+						}
+						else if (thumb.Contains ("dgw") == true)
+						{
+							return thumbPrefix+"dgw"+thumbSuffix;
+						}
+						else if (thumb.Contains ("floss") == true)
+						{
+							return thumbPrefix+"floss"+thumbSuffix;
+						}
+						else if (thumb.Contains ("fr") == true)
+						{
+							return thumbPrefix+"fr"+thumbSuffix;
+						}
+						else if (thumb.Contains ("hn") == true)
+						{
+							return thumbPrefix+"hn"+thumbSuffix;
+						}
+						else if (thumb.Contains ("htg") == true)
+						{
+							return thumbPrefix+"htg"+thumbSuffix;
+						}
+						else if (thumb.Contains ("ifive") == true)
+						{
+							return thumbPrefix+"ifive"+thumbSuffix;
+						}
+						else if (thumb.Contains ("ipad") == true)
+						{
+							return thumbPrefix+"ipad"+thumbSuffix;
+						}
+						else if (thumb.Contains ("kh") == true)
+						{
+							return thumbPrefix+"kh"+thumbSuffix;
+						}
+						else if (thumb.Contains ("mbw") == true)
+						{
+							return thumbPrefix+"mbw"+thumbSuffix;
+						}
+						else if (thumb.Contains ("nsfw") == true)
+						{
+							return thumbPrefix+"nsfw"+thumbSuffix;
+						}
+						else if (thumb.Contains ("specials") == true)
+						{
+							return thumbPrefix+"specials"+thumbSuffix;
+						}
+						else if (thumb.Contains ("sn") == true)
+						{
+							return thumbPrefix+"sn"+thumbSuffix;
+						}
+						else if (thumb.Contains ("tnt") == true)
+						{
+							return thumbPrefix+"tnt"+thumbSuffix;
+						}
+						else if (thumb.Contains ("tsh") == true)
+						{
+							return thumbPrefix+"tsh"+thumbSuffix;
+						}
+						else if (thumb.Contains ("ttg") == true)
+						{
+							return thumbPrefix+"ttg"+thumbSuffix;
+						}
+						else if (thumb.Contains ("twich") == true)
+						{
+							return thumbPrefix+"twich"+thumbSuffix;
+						}
+						else if (thumb.Contains ("twiet") == true)
+						{
+							return thumbPrefix+"twiet"+thumbSuffix;
+						}
+						else if (thumb.Contains ("twig") == true)
+						{
+							return thumbPrefix+"twig"+thumbSuffix;
+						}
+						else if (thumb.Contains ("twil") == true)
+						{
+							return thumbPrefix+"twil"+thumbSuffix;
+						}
+						else if (thumb.Contains ("twit/") == true)
+						{
+							return thumbPrefix+"twit"+thumbSuffix;
+						}
+						else if (thumb.Contains ("tri") == true)
+						{
+							return thumbPrefix+"tri"+thumbSuffix;
+						}
+						else if (thumb.Contains ("ww") == true)
+						{
+							return thumbPrefix+"ww"+thumbSuffix;
+						}
+						else 
+						{
+							return thumbDefault;
+						}
+					}
+			    ]]>
+				</msxsl:script>
+				<xsl:output indent="yes" method="xml" />
+				<xsl:template match="item">
+					<xsl:element name="item">
+						<xsl:attribute name="date">
+							<xsl:value-of select="pubDate"/>
+						</xsl:attribute>
+						<xsl:attribute name="duration">
+							<xsl:value-of select="itunes:duration"/>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:value-of select="func:CleanTitle(title)"/>
+						</xsl:attribute>
+						<xsl:attribute name="rating">
+							<xsl:value-of select="100"/>
+						</xsl:attribute>
+						<xsl:element name="description">
+							<xsl:value-of select="func:TruncateSummary(itunes:summary)"/>
+						</xsl:element>
+						<xsl:element name="thumbnails">
+							<xsl:element name="thumbnail">
+								<xsl:attribute name="height">95</xsl:attribute>
+								<xsl:attribute name="url">
+									<xsl:value-of select="func:GetThumbnail(enclosure/@url)"/>
+								</xsl:attribute>
+								<xsl:attribute name="width">169</xsl:attribute>
+							</xsl:element>
+						</xsl:element>
+						<xsl:element name="videos">
+							<xsl:element name="video">
+								<xsl:attribute name="type">
+									<xsl:value-of select="enclosure/@type"/>
+								</xsl:attribute>
+								<xsl:attribute name="url">
+									<xsl:value-of select="func:ReplaceVideoUrl(enclosure/@url)"/>
+								</xsl:attribute>
+							</xsl:element>
+						</xsl:element>
+					</xsl:element>
+				</xsl:template>
+				<xsl:template match="/">
+					<xsl:element name="items">
+						<xsl:apply-templates select="//item"/>
+					</xsl:element>
+				</xsl:template>
+			</xsl:stylesheet>
+		</Transform>
+	</Transforms>
+</VideoService>
