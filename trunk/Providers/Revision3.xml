@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VideoService
+	Author="Boondoklife"
+	DefaultCategoryTransform="Feed"
+	DefaultCategoryUrl="http://revision3.com/{Category.ID}/feed/MP4-{SortOrder}"
+	Description="Revision3 is the leading television network for the internet generation. They create and produce all-original episodic community driven programs watched by a super-committed and passionate fan base."
+	Enabled="true"
+	Image="http://mainwall1.us.to/macrotube/providers/Revision3.png"
+	IsMultipage="False"
+	Name="Revision3"
+	Type="XSLT"
+	UpdateUrl="http://mainwall1.us.to/macrotube/providers/Revision3.xml"
+	Version="2.1"
+	>
+	<Categories>
+		<Category
+			ID="anniesbits"
+			Name="Annie's Bits"
+		/>
+		<Category
+			ID="appjudgment"
+			Name="App Judgment"
+		/>
+		<Category
+			ID="askjay"
+			Name="Ask Jay"
+		/>
+		<Category
+			ID="tbhs"
+			Name="The Ben Heck Show"
+		/>
+		<Category
+			ID="catherinereitman"
+			Name="Breakin' it Down with Catherine Reitman"
+		/>
+		<Category
+			ID="cutewinfail"
+			Name="CWF (CuteWinFail)"
+		/>
+		<Category
+			ID="deathbattle"
+			Name="Death Battle"
+		/>
+		<Category
+			ID="destructoid"
+			Name="Destructoid"
+		/>
+		<Category
+			ID="diggnation"
+			Name="DiggNation"
+		/>
+		<Category
+			ID="filmriot"
+			Name="Film Riot"
+		/>
+		<Category
+			ID="filmstate"
+			Name="Film State"
+		/>
+		<Category
+			ID="foundation"
+			Name="Foundation"
+		/>
+		<Category
+			ID="geekbeettv"
+			Name="GeekBeat.TV"
+		/>
+		<Category
+			ID="gizmoslip"
+			Name="GizmoSlip"
+		/>
+		<Category
+			ID="goremy"
+			Name="GoRemy"
+		/>
+		<Category
+			ID="hak5"
+			Name="Hak5"
+		/>
+		<Category
+			ID="screwattackhardnews"
+			Name="Hard News"
+		/>
+		<Category
+			ID="hdnation"
+			Name="HD Nation"
+		/>
+		<Category
+			ID="classichiddencamera"
+			Name="Hidden Camera Classic"
+		/>
+		<Category
+			ID="wecomefromthefuture"
+			Name="io9: We Come From the Future"
+		/>
+		<Category
+			ID="justforlaughstv"
+			Name="Just For Laughs Gags"
+		/>
+		<Category
+			ID="lifehacker"
+			Name="Lifehacker"
+		/>
+		<Category
+			ID="melodysheep"
+			Name="melodysheep"
+		/>
+		<Category
+			ID="mobilegeeks"
+			Name="MobileGeeks"
+		/>
+		<Category
+			ID="newchallenger"
+			Name="New Challenger"
+		/>
+		<Category
+			ID="nixiepixel"
+			Name="Nixie Pixel GeekBuzz"
+		/>
+		<Category
+			ID="osalt"
+			Name="OS.ALT"
+		/>
+		<Category
+			ID="philipdefranco"
+			Name="The Philip DeFranco Show"
+		/>
+		<Category
+			ID="rev3gamesoriginals"
+			Name="Rev3Games Originals"
+		/>
+		<Category
+			ID="oneoff"
+			Name="Revision3 One Offs"
+		/>
+		<Category
+			ID="scamschool"
+			Name="Scam School"
+		/>
+		<Category
+			ID="sgnlbysony"
+			Name="SGNL by Sony"
+		/>
+		<Category
+			ID="sidescrollers"
+			Name="Side Scrollers"
+		/>
+		<Category
+			ID="soldierknowsbest"
+			Name="SoldierKnowsBest"
+		/>
+		<Category
+			ID="technobuffalo"
+			Name="TechnoBuffalo"
+		/>
+		<Category
+			ID="tekzilla"
+			Name="Tekzilla"
+		/>
+		<Category
+			ID="toasteddonut"
+			Name="Toasted Donut"
+		/>
+		<Category
+			ID="trs"
+			Name="The Totally Rad Show"
+		/>
+		<Category
+			ID="tysihelp"
+			Name="Ty's iHelp"
+		/>
+		<Category
+			ID="unboxtherapy"
+			Name="Unbox Therapy"
+		/>
+		<Category
+			ID="unboxingporn"
+			Name="Unboxing Porn"
+		/>
+		<Category
+			ID="variant"
+			Name="Variant"
+		/>
+	</Categories>
+	<SortOrders>
+		<SortOrder
+			ID="hd30"
+			Name="HD"
+		/>
+		<SortOrder
+			ID="Large"
+			Name="Large"
+		/>
+
+		<SortOrder
+			ID="Small"
+			Name="Small"
+		/>
+	</SortOrders>
+	<Transforms>
+		<Transform Name="Feed">
+			<xsl:stylesheet
+				version="1.0"
+				xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" 
+				xmlns:media="http://search.yahoo.com/mrss" 
+				xmlns:dm="http://www.dailymotion.com/dmrss"
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+				xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+				xmlns:func="urn:local-functions"
+				>
+				<msxsl:script language="C#" implements-prefix="func">
+				<![CDATA[
+				static Regex thumbnailMatch = new Regex(@"^.*revision3/web/([^-]*--[^-]*--.*--).*\..*$", RegexOptions.Compiled);
+				
+				public string deriveThumbnailUrl(string videoUrl)
+				{
+					return string.Format("http://bitcast-a.bitgravity.com/revision3/images/shows/{0}medium.thumb.jpg", thumbnailMatch.Replace(videoUrl, @"$1"));
+				}
+				]]>
+				</msxsl:script>
+				<xsl:output indent="yes" method="xml" />
+				<xsl:template match="item">
+					<xsl:element name="item">
+						<xsl:attribute name="date">
+							<xsl:value-of select="pubDate"/>
+						</xsl:attribute>
+						<xsl:attribute name="duration">
+							<xsl:value-of select="media:content/@duration"/>
+						</xsl:attribute>
+						<xsl:attribute name="rating">
+							<xsl:value-of select="100"/>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:value-of select="title"/>
+						</xsl:attribute>
+						<xsl:element name="description">
+							<xsl:value-of select="description"/>
+						</xsl:element>
+						<xsl:element name="thumbnails">
+							<xsl:element name="thumbnail">
+								<xsl:attribute name="height">95</xsl:attribute>
+								<xsl:attribute name="url"><xsl:value-of select="func:deriveThumbnailUrl(enclosure/@url)"/></xsl:attribute>
+								<xsl:attribute name="width">169</xsl:attribute>
+							</xsl:element>
+						</xsl:element>
+						<xsl:element name="videos">
+							<xsl:element name="video">
+								<xsl:attribute name="type"><xsl:value-of select="enclosure/@type"/></xsl:attribute>
+								<xsl:attribute name="url"><xsl:value-of select="enclosure/@url"/></xsl:attribute>
+							</xsl:element>
+						</xsl:element>
+					</xsl:element>
+				</xsl:template>
+				<xsl:template match="/">
+					<xsl:element name="items">
+						<xsl:apply-templates select="//item"/>
+					</xsl:element>
+				</xsl:template>
+			</xsl:stylesheet>
+		</Transform>
+	</Transforms>
+</VideoService>
