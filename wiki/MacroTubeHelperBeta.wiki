@@ -14,11 +14,11 @@ The basic idea is to provide a source xml file which uses a helper app to get th
 
 No having to download and update provider xml files - a pain if your WMC is under your TV without a mouse or keyboard. It will start off with youtube and youtubehd support. 
 
-The trial will start on 20 August 2012 and run for 30 days, after which a license key will be needed.
+The trial has attracted 2000+ users so far. As such the trial will continue until the end of November 2012. After this point a video message will be displayed indicating that the trial has end and instructions on how to obtain a license will be provided.
 
 = Roadmap =
 
-The app will aim to incorporate all the existing MacroTube providers. There will be a one off license cost of $15. No additional cost if you have multiple WMC machines. Think of it as a Windows Media Center Appstore app. 
+The app will aim to incorporate all the existing MacroTube providers. There will be a license cost of $15. No additional cost if you have multiple WMC machines - users will be able to activate the license on up to 3 machines. If you get a new computer and already have 3 activations, you can transfer one of them to your new machine. 
 
 Existing providers and xml files will remain available and anyone can upload an xml file for any provider here. You do not have to pay for a license to use the community provided xml files.
 
